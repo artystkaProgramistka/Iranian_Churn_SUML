@@ -48,7 +48,7 @@ if selected_option == "Strona główna":
                 """)
 
                 st.write("**Ewaluacja i Wybór Modelu**")
-                st.write("*Metody oceny wydajności modelu:*"))
+                st.write("*Metody oceny wydajności modelu:*")
                 st.markdown("""
                 - ROC AUC: Główna metryka oceny, osiągnięto wynik 0.980.
                 - Confusion matrix: Do oceny: 
