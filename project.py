@@ -74,13 +74,13 @@ if selected_option == "Strona główna":
                 """)
 
             with col2:
-                st.write("**Wykresy**")
+                st.write("**Wykresy: **")
 
                 # Wstawienie obrazów
-                st.image("macierz_pomylek.png", caption="macierz_pomylek.png")
-                st.image("wyniki_metryki.png", caption="wyniki_metryki.png")
-                st.image("wykres_waznosci_cech_dla_wyniku.png", caption="wykres_waznosci_cech_dla_wyniku.png")
-                st.image("maciez_korelacji.png", caption="maciez_korelacji.png")
+                st.image("macierz_pomylek.png", caption="Macierz pomyłek")
+                st.image("wyniki_metryki.png", caption="Wyniki metryki")
+                st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
+                st.image("maciez_korelacji.png", caption="Macierz korelacji")
 
         with tab5:
 
