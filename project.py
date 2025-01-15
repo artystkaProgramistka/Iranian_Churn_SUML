@@ -74,7 +74,7 @@ if selected_option == "Strona główna":
                 """)
 
             with col2:
-                st.write("**Wykresy: **")
+                st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
                 # Wstawienie obrazów
                 st.image("macierz_pomylek.png", caption="Macierz pomyłek")
