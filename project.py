@@ -29,9 +29,49 @@ if selected_option == "Strona główna":
             col1, col2 = st.columns(2)
 
             with col1:
-                st.write("**Lorem ipsum**")
-                st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
-                         " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
+                st.write("**LightGBM**")
+                st.write("LightGBM (Light Gradient Boosting Machine) to zaawansowany algorytm oparty na metodzie"
+                         " gradientowego wzmacniania. szczególnie wydajny przy dużych zbiorach danych.)
+                st.write("W naszym modelu został skonfigurowany z parametrami: ")
+                st.markdown("""
+                - Pierwszy punkt
+                - Drugi punkt
+                - Trzeci punkt
+                """)
+
+                st.write("**Strategia poszukiwania hiperparametrów:**")
+                st.markdown("""
+                - Grid search z randomizacją.
+                - K-fold cross-validation (5 foldów, stratified).
+                - Max search time: bez limitu.
+                - Random seed: 1337 dla replikacji wyników.
+                """)
+
+                st.write("**Ewaluacja i Wybór Modelu**")
+                st.write("*Metody oceny wydajności modelu:*"))
+                st.markdown("""
+                - ROC AUC: Główna metryka oceny, osiągnięto wynik 0.980.
+                - Confusion matrix: Do oceny: 
+                """)Do oceny dokładności (Accuracy), precyzji (Precision), czułości
+                st.markdown("""
+                - dokładności (Accuracy),
+                - precyzji (Precision),
+                - czułości     
+                """)
+
+                st.write("*Polityka podziału danych:*")
+                st.markdown("""
+                - Random split: Z losowym podziałem na zbiór treningowy i testowy.
+                - K-fold cross-validation: Używane do dokładniejszej ewaluacji modelu.   
+                """)
+
+                st.write("**Wyniki modelowania:**")
+                st.markdown("""
+                • Accuracy: 95%
+                • Precision: 75%
+                • Recall: 100%
+                • F1-Score: 86%  
+                """)
 
             with col2:
                 st.write("**Lorem ipsum**")
