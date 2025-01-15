@@ -67,16 +67,20 @@ if selected_option == "Strona główna":
 
                 st.write("**Wyniki modelowania:**")
                 st.markdown("""
-                • Accuracy: 95%
-                • Precision: 75%
-                • Recall: 100%
-                • F1-Score: 86%  
+                - Accuracy: 95%
+                - Precision: 75%
+                - Recall: 100%
+                - F1-Score: 86%  
                 """)
 
             with col2:
-                st.write("**Lorem ipsum**")
-                st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
-                         " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
+                st.write("**Wykresy**")
+
+                # Wstawienie obrazów
+                st.image("macierz_pomylek.png", caption="macierz_pomylek.png")
+                st.image("wyniki_metryki.png", caption="wyniki_metryki.png")
+                st.image("wykres_waznosci_cech_dla_wyniku.png", caption="wykres_waznosci_cech_dla_wyniku.png")
+                st.image("maciez_korelacji.png", caption="maciez_korelacji.png")
 
         with tab5:
 
