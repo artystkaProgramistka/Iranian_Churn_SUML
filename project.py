@@ -52,7 +52,7 @@ if selected_option == "Strona główna":
                 st.markdown("""
                 - ROC AUC: Główna metryka oceny, osiągnięto wynik 0.980.
                 - Confusion matrix: Do oceny: 
-                """)Do oceny dokładności (Accuracy), precyzji (Precision), czułości
+                """)
                 st.markdown("""
                 - dokładności (Accuracy),
                 - precyzji (Precision),
