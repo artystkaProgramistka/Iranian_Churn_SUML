@@ -31,7 +31,7 @@ if selected_option == "Strona główna":
             with col1:
                 st.write("**LightGBM**")
                 st.write("LightGBM (Light Gradient Boosting Machine) to zaawansowany algorytm oparty na metodzie"
-                         " gradientowego wzmacniania. szczególnie wydajny przy dużych zbiorach danych.)
+                         " gradientowego wzmacniania. szczególnie wydajny przy dużych zbiorach danych.")
                 st.write("W naszym modelu został skonfigurowany z parametrami: ")
                 st.markdown("""
                 - Pierwszy punkt
