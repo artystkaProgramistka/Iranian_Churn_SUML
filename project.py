@@ -116,124 +116,65 @@ if selected_option == "Strona główna":
             #### Etykieta:
             - **Churn** - Czy Zrezygnował z Subskrypcji *(Binary)*
             """)
-
-            uploaded_file = st.file_uploader("Wgraj plik .csv", type="csv")
-
-            # Check if a file has been uploaded
-            if uploaded_file is not None:
-                # Read the CSV file into a pandas DataFrame
-                df = pd.read_csv(uploaded_file)
-
-                # Display a sample of the data
-                st.write("Załadowane dane:")
-                st.table(df.head())
-
-                try:
-                    # Load the trained model
-                    model = joblib.load("best_rf_model.pkl")  # Ensure model file is in the same directory
-
-                    # Preprocessing the uploaded data (adjust based on `train_save_model.py`)
-                    df.drop(['Age'], axis=1, inplace=True, errors='ignore')  # Drop 'Age' column if it exists
-                    integer_columns = [col for col in df.columns if col not in ['Status', 'Complains', 'Churn']]
-                    df[integer_columns] = df[integer_columns].astype('int')
-                    df['Status'] = df['Status'].map({1: True, 2: False}).astype('bool')
-                    df['Complains'] = df['Complains'].map({1: True, 0: False}).astype('bool')
-
-                    # Drop the target column if it exists
-                    X_infer = df.drop(['Churn'], axis=1, errors='ignore')
-
-                    # Make predictions
-                    predictions = model.predict(X_infer)
-
-                    # Add predictions to the DataFrame
-                    df['Prediction'] = predictions
-
-                    # Display rows incrementally with session state tracking
-                    if "rows_shown" not in st.session_state:
-                        st.session_state.rows_shown = 50
-
-                    rows_shown = st.session_state.rows_shown
-                    st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
-                    st.table(df.iloc[:rows_shown])
-
-                    if rows_shown < len(df):
-                        if st.button(f"Pokaż kolejne {min(100, len(df) - rows_shown)} wierszy",
-                                     key=f"button_{rows_shown}"):
-                            st.session_state.rows_shown += 100
-
-                    # Add a download button for the predictions CSV
-                    csv = df.to_csv(index=False).encode('utf-8')
-                    st.download_button(
-                        label="Pobierz dane z predykcjami jako CSV",
-                        data=csv,
-                        file_name="predykcje.csv",
-                        mime="text/csv",
-                    )
-
-                except FileNotFoundError:
-                    st.error("Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
-                except Exception as e:
-                    st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
     with tab2:
-        # Przykładowa ścieżka do pliku CSV (może być w tym samym folderze co skrypt)
-        DATA_PATH = "customer_churn.csv"
-        MODEL_PATH = "best_rf_model.pkl"
+        uploaded_file = st.file_uploader("Wgraj plik .csv", type="csv")
 
-        # Wczytujemy dane z pliku CSV
-        df = pd.read_csv(DATA_PATH)
+        # Check if a file has been uploaded
+        if uploaded_file is not None:
+            # Read the CSV file into a pandas DataFrame
+            df = pd.read_csv(uploaded_file)
 
-        st.write("Załadowane dane:")
-        st.table(df.head())
+            # Display a sample of the data
+            st.write("Załadowane dane:")
+            st.table(df.head())
 
-        try:
-            # Wczytujemy wytrenowany model
-            model = joblib.load(MODEL_PATH)  # Upewnij się, że plik z modelem istnieje w tym samym katalogu
+            try:
+                # Load the trained model
+                model = joblib.load("best_rf_model.pkl")  # Ensure model file is in the same directory
 
-            # Przykładowy preprocessing (dopasuj do potrzeb własnego modelu)
-            df.drop(['Age'], axis=1, inplace=True, errors='ignore')  # Przykład: usuwamy kolumnę 'Age' (jeśli istnieje)
-            integer_columns = [col for col in df.columns if col not in ['Status', 'Complains', 'Churn']]
-            df[integer_columns] = df[integer_columns].astype('int')
-            df['Status'] = df['Status'].map({1: True, 2: False}).astype('bool')
-            df['Complains'] = df['Complains'].map({1: True, 0: False}).astype('bool')
+                # Preprocessing the uploaded data (adjust based on `train_save_model.py`)
+                df.drop(['Age'], axis=1, inplace=True, errors='ignore')  # Drop 'Age' column if it exists
+                integer_columns = [col for col in df.columns if col not in ['Status', 'Complains', 'Churn']]
+                df[integer_columns] = df[integer_columns].astype('int')
+                df['Status'] = df['Status'].map({1: True, 2: False}).astype('bool')
+                df['Complains'] = df['Complains'].map({1: True, 0: False}).astype('bool')
 
-            # Wydzielamy dane do predykcji (jeśli istnieje kolumna 'Churn', usuwamy ją przed predykcją)
-            X_infer = df.drop(['Churn'], axis=1, errors='ignore')
+                # Drop the target column if it exists
+                X_infer = df.drop(['Churn'], axis=1, errors='ignore')
 
-            # Dokonujemy predykcji
-            predictions = model.predict(X_infer)
+                # Make predictions
+                predictions = model.predict(X_infer)
 
-            # Dodajemy kolumnę z przewidywaniami do DataFrame
-            df['Prediction'] = predictions
+                # Add predictions to the DataFrame
+                df['Prediction'] = predictions
 
-            # Wyświetlanie tabeli z wynikami (np. w partiach 50 wierszy)
-            if "rows_shown" not in st.session_state:
-                st.session_state.rows_shown = 50
+                # Display rows incrementally with session state tracking
+                if "rows_shown" not in st.session_state:
+                    st.session_state.rows_shown = 50
 
-            rows_shown = st.session_state.rows_shown
-            st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
-            st.table(df.iloc[:rows_shown])
+                rows_shown = st.session_state.rows_shown
+                st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
+                st.table(df.iloc[:rows_shown])
 
-            # Przycisk do pokazywania kolejnych wierszy
-            if rows_shown < len(df):
-                if st.button(f"Pokaż kolejne {min(100, len(df) - rows_shown)} wierszy",
-                             key=f"button_{rows_shown}"):
-                    st.session_state.rows_shown += 100
+                if rows_shown < len(df):
+                    if st.button(f"Pokaż kolejne {min(100, len(df) - rows_shown)} wierszy",
+                                 key=f"button_{rows_shown}"):
+                        st.session_state.rows_shown += 100
 
-            # Dodajemy przycisk do pobrania pliku z przewidywaniami
-            csv_data = df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="Pobierz dane z predykcjami jako CSV",
-                data=csv_data,
-                file_name="predykcje.csv",
-                mime="text/csv",
-            )
+                # Add a download button for the predictions CSV
+                csv = df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="Pobierz dane z predykcjami jako CSV",
+                    data=csv,
+                    file_name="predykcje.csv",
+                    mime="text/csv",
+                )
 
-        except FileNotFoundError:
-            st.error(
-                f"Plik modelu `{MODEL_PATH}` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt."
-            )
-        except Exception as e:
-            st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
+            except FileNotFoundError:
+                st.error(
+                    "Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
+            except Exception as e:
+                st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
 
     # with tab6:
     #     st.subheader("Oceń Aplikacje")
