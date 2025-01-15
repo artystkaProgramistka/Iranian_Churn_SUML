@@ -174,8 +174,7 @@ if selected_option == "Strona główna":
                     st.error("Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
                 except Exception as e:
                     st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
-    with:
-        tab2:
+    with tab2:
 
     # Przykładowa ścieżka do pliku CSV (może być w tym samym folderze co skrypt)
     DATA_PATH = "customer_churn.csv"
