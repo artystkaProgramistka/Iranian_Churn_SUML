@@ -16,11 +16,10 @@ if selected_option == "Strona główna":
 
     with tab1:
         st.subheader("Opis Aplikacji")
-        st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
-                 "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
-                 "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
-                 "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat "
-                 "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+        st.write("Nasza aplikacja jest narzędziem stworzone dla firm bazujących na modelu subskrypcyjnym."
+                 " Dzięki zaawansowanemu modelowi predykcyjnemu aplikacja pozwala zidentyfikować klientów"
+                 " zagrożonych rezygnacją i zrozumieć kluczowe czynniki wpływające na ich decyzje."
+                 " Uzyskaj predykcję i zwiększ retencję swoich subskrybentów.")
 
         tab4, tab5 = st.tabs(["Informacje o algorytmie", "informacje o danych"])
 
@@ -77,15 +76,46 @@ if selected_option == "Strona główna":
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
                 # Wstawienie obrazów
-                st.image("macierz_pomylek.png", caption="Macierz pomyłek")
+                st.image("macierz_pomylek.png", caption="**Macierz pomyłek**")
                 st.image("wyniki_metryki.png", caption="Wyniki metryki")
                 st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
                 st.image("maciez_korelacji.png", caption="Macierz korelacji")
 
         with tab5:
 
-            st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit,"
-                     " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")
+            st.markdown("""
+            ### Dane Użyte w Projekcie
+            Dane użyte w projekcie pochodzą z bazy danych **Iranian Churn Dataset** udostępnionej przez University of California, Irvine. Zbór danych jest dostępny pod adresem: [Iranian Churn Dataset](https://archive.ics.uci.edu/ml/datasets/Iranian+Churn+Dataset) i objęty jest licencją **Creative Commons Attribution 4.0 International (CC BY 4.0)**, co pozwala na udostępnianie i adaptację danych do dowolnych celów, pod warunkiem udzielenia odpowiedniego uznania autorstwa.
+
+            Dane obejmują informacje zebrane przez irańską firmę telekomunikacyjną na przestrzeni dwunastu miesięcy. Zbór danych zawiera **3150 obserwacji** oraz **13 cech**, takich jak liczba nieudanych połączeń, częstotliwość SMS-ów, rodzaj taryfy, wartość dla klienta itp. Wszystkie cechy są zagregowane z pierwszych 9 miesięcy, a etykieta rezygnacji (**Churn**) odzwierciedla stan na koniec dwunastu miesięcy. W zbiorze danych nie ma brakujących wartości.
+
+            ---
+
+            ### Podział Danych
+            Dane zostały podzielone na zbiory:
+            - **70%** do trenowania modelu,
+            - **30%** do doszkalania modelu.
+
+            ---
+
+            ### Szczegółowe Informacje o Cechach Danych
+            - **Call Failure** - Nieudane Połączenia *(Integer)*
+            - **Frequency of SMS** - Częstotliwość wysyłania SMS-ów *(Integer)*
+            - **Complaints** - Czy Złożono Skargi *(Binary)*
+            - **Distinct Called Numbers** - Liczba Odrębnych Połączeń *(Integer)*
+            - **Subscription Length** - Długość Abonamentu *(Integer)*
+            - **Age** - Wiek *(Integer)*
+            - **Age Group** - Grupa Wiekowa *(Integer)*
+            - **Charge Amount** - Wysokość Opłaty *(Integer)*
+            - **Tariff Plan** - Rodzaj Usługi *(Integer)*
+            - **Seconds of Use** - Sekundy Użytkowania *(Integer)*
+            - **Status** *(Binary)*
+            - **Frequency of Use** - Częstotliwość Użytkowania *(Integer)*
+            - **Customer Value** - Wartość dla Klienta *(Continuous)*
+
+            #### Etykieta:
+            - **Churn** - Czy Zrezygnował z Subskrypcji *(Binary)*
+            """)
 
             uploaded_file = st.file_uploader("Wgraj plik .csv", type="csv")
 
