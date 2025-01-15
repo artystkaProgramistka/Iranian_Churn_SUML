@@ -81,6 +81,67 @@ if selected_option == "Strona główna":
                 st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
                 st.image("maciez_korelacji.png", caption="Macierz korelacji")
 
+        with: tab2:
+
+            # Przykładowa ścieżka do pliku CSV (może być w tym samym folderze co skrypt)
+            DATA_PATH = "customer_churn.csv"
+            MODEL_PATH = "best_rf_model.pkl"
+
+            # Wczytujemy dane z pliku CSV
+            df = pd.read_csv(DATA_PATH)
+
+            st.write("Załadowane dane:")
+            st.table(df.head())
+
+            try:
+                # Wczytujemy wytrenowany model
+                model = joblib.load(MODEL_PATH)  # Upewnij się, że plik z modelem istnieje w tym samym katalogu
+
+                # Przykładowy preprocessing (dopasuj do potrzeb własnego modelu)
+                df.drop(['Age'], axis=1, inplace=True, errors='ignore')  # Przykład: usuwamy kolumnę 'Age' (jeśli istnieje)
+                integer_columns = [col for col in df.columns if col not in ['Status', 'Complains', 'Churn']]
+                df[integer_columns] = df[integer_columns].astype('int')
+                df['Status'] = df['Status'].map({1: True, 2: False}).astype('bool')
+                df['Complains'] = df['Complains'].map({1: True, 0: False}).astype('bool')
+
+                # Wydzielamy dane do predykcji (jeśli istnieje kolumna 'Churn', usuwamy ją przed predykcją)
+                X_infer = df.drop(['Churn'], axis=1, errors='ignore')
+
+                # Dokonujemy predykcji
+                predictions = model.predict(X_infer)
+
+                # Dodajemy kolumnę z przewidywaniami do DataFrame
+                df['Prediction'] = predictions
+
+                # Wyświetlanie tabeli z wynikami (np. w partiach 50 wierszy)
+                if "rows_shown" not in st.session_state:
+                    st.session_state.rows_shown = 50
+
+                rows_shown = st.session_state.rows_shown
+                st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
+                st.table(df.iloc[:rows_shown])
+
+                # Przycisk do pokazywania kolejnych wierszy
+                if rows_shown < len(df):
+                    if st.button(f"Pokaż kolejne {min(100, len(df) - rows_shown)} wierszy",
+                                key=f"button_{rows_shown}"):
+                        st.session_state.rows_shown += 100
+
+                # Dodajemy przycisk do pobrania pliku z przewidywaniami
+                csv_data = df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="Pobierz dane z predykcjami jako CSV",
+                    data=csv_data,
+                    file_name="predykcje.csv",
+                    mime="text/csv",
+                )
+
+            except FileNotFoundError:
+                st.error(
+                    f"Plik modelu `{MODEL_PATH}` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
+            except Exception as e:
+                st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
+
         with tab5:
 
             st.markdown("""
@@ -174,11 +235,11 @@ if selected_option == "Strona główna":
                     st.error("Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
                 except Exception as e:
                     st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
-    with tab6:
-        st.subheader("Oceń Aplikacje")
-        st.write("Twoja opinia jest dla nas ważna! Oceń aplikację i podziel się swoimi uwagami.")
-        st.write("Oceń zadowolenie aplikacji")
-        rating=st.slider("Zadowolenie 0-10",0,10,5)
-        feedback = st.text_area("Podziel się swoją opinią (opcjonalne):")
-        if st.button("Prześlij opinię"):
-            st.success("Dziękujemy za Twoją opinię!")
+    # with tab6:
+    #     st.subheader("Oceń Aplikacje")
+    #     st.write("Twoja opinia jest dla nas ważna! Oceń aplikację i podziel się swoimi uwagami.")
+    #     st.write("Oceń zadowolenie aplikacji")
+    #     rating=st.slider("Zadowolenie 0-10",0,10,5)
+    #     feedback = st.text_area("Podziel się swoją opinią (opcjonalne):")
+    #     if st.button("Prześlij opinię"):
+    #         st.success("Dziękujemy za Twoją opinię!")
