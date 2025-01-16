@@ -4,15 +4,15 @@ import joblib
 import os
 
 # Panel boczny do wyboru aplikacji
-st.sidebar.title("Panel boczny")
-selected_option = st.sidebar.radio("Wybierz aplikację", ["Strona główna", "Aplikacja"])
+st.sidebar.title("Chcesz dowiedzieć się o aplikacji, czy uzyskać predykcję dla rezygnacji klientów z serwisu tlekomunikacyjnego?")
+selected_option = st.sidebar.radio("Wybierz Opcję", ["Informacje o Aplikacji", "Uzyskaj Predykcję"])
 
 if selected_option == "Strona główna":
     st.title("Predyktor odejść klientów z serwisów telekomunikacyjnych")
     st.write("Witamy na naszej stronie!")
 
     # Zakładka z dodatkowymi opcjami
-    tab1, tab2, tab3,tab6 = st.tabs(["Informacje na temat aplikacji", "Przykład działania", "Test aplikacji","Oceń Aplikacje"])
+    tab1, tab2, tab3= st.tabs(["Informacje na temat aplikacji", "Przykład działania", "Oceń Aplikację"])
 
     with tab1:
         st.subheader("Opis Aplikacji")
@@ -303,7 +303,7 @@ if selected_option == "Strona główna":
             except Exception as e:
                 st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
 
-    # with tab6:
+    # with tab3:
     #     st.subheader("Oceń Aplikacje")
     #     st.write("Twoja opinia jest dla nas ważna! Oceń aplikację i podziel się swoimi uwagami.")
     #     st.write("Oceń zadowolenie aplikacji")
