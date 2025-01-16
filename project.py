@@ -75,30 +75,33 @@ if selected_option == "Strona główna":
             with col2:
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
-                # Wstawienie obrazów
+                # Inserting the confusion matrix image with caption
                 st.image("macierz_pomylek.png", caption="Macierz Pomyłek (Confusion Matrix)")
-                st.markdown(
-                    """## Macierz Pomyłek (Confusion Matrix)
-                    Macierz pomyłek to narzędzie używane w uczeniu maszynowym do oceny działania modelu klasyfikacyjnego. Prezentuje ona wyniki predykcji w formie tabeli, która porównuje przewidywane klasy z rzeczywistymi klasami. Dzięki macierzy pomyłek można zrozumieć, jak dobrze model radzi sobie z klasyfikowaniem danych i gdzie popełnia błędy.
 
-                    ### Jak czytać macierz pomyłek?
+                # Adding Markdown content for Confusion Matrix explanation
+                st.markdown("""
+                ## Macierz Pomyłek (Confusion Matrix)
+                Macierz pomyłek to narzędzie używane w uczeniu maszynowym do oceny działania modelu klasyfikacyjnego. Prezentuje ona wyniki predykcji w formie tabeli, która porównuje przewidywane klasy z rzeczywistymi klasami. Dzięki macierzy pomyłek można zrozumieć, jak dobrze model radzi sobie z klasyfikowaniem danych i gdzie popełnia błędy.
 
-                    Macierz pomyłek składa się z czterech podstawowych elementów:
+                ### Jak czytać macierz pomyłek?
 
-                    1. **True Positives (TP)** - Liczba przypadków, w których model poprawnie przewidział pozytywną klasę.
-                    2. **True Negatives (TN)** - Liczba przypadków, w których model poprawnie przewidział negatywną klasę.
-                    3. **False Positives (FP)** - Liczba przypadków, w których model błędnie przewidział pozytywną klasę (tzw. fałszywy alarm).
-                    4. **False Negatives (FN)** - Liczba przypadków, w których model błędnie przewidział negatywną klasę (tzw. przeoczenie).
+                Macierz pomyłek składa się z czterech podstawowych elementów:
 
-                    ### Interpretacja
+                1. **True Positives (TP)** - Liczba przypadków, w których model poprawnie przewidział pozytywną klasę.
+                2. **True Negatives (TN)** - Liczba przypadków, w których model poprawnie przewidział negatywną klasę.
+                3. **False Positives (FP)** - Liczba przypadków, w których model błędnie przewidział pozytywną klasę (tzw. fałszywy alarm).
+                4. **False Negatives (FN)** - Liczba przypadków, w których model błędnie przewidział negatywną klasę (tzw. przeoczenie).
 
-                    - **Oś pozioma (Przewidywana wartość)**: Przedstawia klasy przewidywane przez model.
-                    - **Oś pionowa (Rzeczywista wartość)**: Przedstawia faktyczne klasy w danych.
-                    - Pola na przecięciu obu osi wskazują liczbę przypadków dla danej kombinacji przewidywań i rzeczywistości.
+                ### Interpretacja
 
-                    Dzięki tym informacjom można obliczyć różne miary skuteczności modelu, takie jak dokładność, precyzja, czułość czy miara F1.
-                    """
-                )
+                - **Oś pozioma (Przewidywana wartość)**: Przedstawia klasy przewidywane przez model.
+                - **Oś pionowa (Rzeczywista wartość)**: Przedstawia faktyczne klasy w danych.
+                - Pola na przecięciu obu osi wskazują liczbę przypadków dla danej kombinacji przewidywań i rzeczywistości.
+
+                Dzięki tym informacjom można obliczyć różne miary skuteczności modelu, takie jak dokładność, precyzja, czułość czy miara F1.
+                """, unsafe_allow_html=False)
+
+                # Adding other related visualizations
                 st.image("wyniki_metryki.png", caption="Wyniki metryki")
                 st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
                 st.image("maciez_korelacji.png", caption="Macierz korelacji")
