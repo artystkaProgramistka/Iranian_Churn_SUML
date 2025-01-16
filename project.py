@@ -33,44 +33,80 @@ if selected_option == "Strona główna":
                          " gradientowego wzmacniania. szczególnie wydajny przy dużych zbiorach danych.")
                 st.write("W naszym modelu został skonfigurowany z parametrami: ")
                 st.markdown("""
-                - Pierwszy punkt
-                - Drugi punkt
-                - Trzeci punkt
-                """)
+                    - Pierwszy punkt
+                    - Drugi punkt
+                    - Trzeci punkt
+                    """)
 
                 st.write("**Strategia poszukiwania hiperparametrów:**")
                 st.markdown("""
-                - Grid search z randomizacją.
-                - K-fold cross-validation (5 foldów, stratified).
-                - Max search time: bez limitu.
-                - Random seed: 1337 dla replikacji wyników.
-                """)
+                    - Grid search z randomizacją.
+                    - K-fold cross-validation (5 foldów, stratified).
+                    - Max search time: bez limitu.
+                    - Random seed: 1337 dla replikacji wyników.
+                    """)
 
                 st.write("**Ewaluacja i Wybór Modelu**")
                 st.write("*Metody oceny wydajności modelu:*")
                 st.markdown("""
-                - ROC AUC: Główna metryka oceny, osiągnięto wynik 0.980.
-                - Confusion matrix: Do oceny: 
-                """)
+                    - ROC AUC: Główna metryka oceny, osiągnięto wynik 0.980.
+                    - Confusion matrix: Do oceny: 
+                    """)
                 st.markdown("""
-                - dokładności (Accuracy),
-                - precyzji (Precision),
-                - czułości     
-                """)
+                    - dokładności (Accuracy),
+                    - precyzji (Precision),
+                    - czułości     
+                    """)
 
                 st.write("*Polityka podziału danych:*")
                 st.markdown("""
-                - Random split: Z losowym podziałem na zbiór treningowy i testowy.
-                - K-fold cross-validation: Używane do dokładniejszej ewaluacji modelu.   
-                """)
+                    - Random split: Z losowym podziałem na zbiór treningowy i testowy.
+                    - K-fold cross-validation: Używane do dokładniejszej ewaluacji modelu.   
+                    """)
 
                 st.write("**Wyniki modelowania:**")
                 st.markdown("""
-                - Accuracy: 95%
-                - Precision: 75%
-                - Recall: 100%
-                - F1-Score: 86%  
-                """)
+                    - Accuracy: 95%
+                    - Precision: 75%
+                    - Recall: 100%
+                    - F1-Score: 86%  
+                    """)
+
+                # Adding the metrics visualization
+                st.image("wyniki_metryki.png", caption="Metryki Jakości Modelu Uczenia Maszynowego")
+
+                # Adding the updated explanation for model metrics in a business context
+                st.markdown("""
+                    ## Metryki Jakości Modelu Uczenia Maszynowego w Kontekście Biznesowym
+
+                    Nasza aplikacja wspiera firmy działające w modelu subskrypcyjnym, pomagając identyfikować klientów zagrożonych rezygnacją. Poniżej wyjaśniamy, jak metryki modelu uczenia maszynowego pomagają w zrozumieniu i doskonaleniu strategii retencji klientów.
+
+                    ### Definicje Metryk
+
+                    1. **Dokładność (Accuracy):**
+                       - Definicja: Odsetek poprawnych predykcji w stosunku do całkowitej liczby obserwacji.
+                       - W kontekście biznesowym: Pokazuje, jak skutecznie model identyfikuje zarówno klientów, którzy zrezygnują, jak i tych, którzy pozostaną. Wysoka dokładność oznacza, że firma może precyzyjnie planować działania marketingowe lub retencyjne.
+
+                    2. **Precyzja (Precision):**
+                       - Definicja: Odsetek poprawnych predykcji pozytywnych w stosunku do wszystkich przypadków przewidzianych jako pozytywne.
+                       - W kontekście biznesowym: Wysoka precyzja oznacza, że zasoby firmy (np. budżet na kampanie retencyjne) są kierowane tylko do rzeczywiście zagrożonych klientów, minimalizując koszty niepotrzebnych działań.
+
+                    3. **Czułość (Recall):**
+                       - Definicja: Odsetek poprawnych predykcji pozytywnych w stosunku do wszystkich rzeczywistych przypadków pozytywnych.
+                       - W kontekście biznesowym: Wysoka czułość oznacza, że firma identyfikuje większość klientów, którzy faktycznie planują zrezygnować. Jest to kluczowe, gdy celem jest ograniczenie odpływu subskrybentów.
+
+                    4. **F1-Score:**
+                       - Definicja: Średnia harmoniczna precyzji i czułości.
+                       - W kontekście biznesowym: Stanowi zrównoważoną miarę, która uwzględnia zarówno skuteczność w wykrywaniu zagrożonych klientów, jak i efektywność alokacji zasobów na kampanie retencyjne.
+
+                    ### Podsumowanie
+                    - **Dokładność:** Ogólna miara skuteczności modelu.
+                    - **Precyzja:** Efektywność wykorzystania budżetu na kampanie retencyjne.
+                    - **Czułość:** Zdolność identyfikacji wszystkich zagrożonych klientów.
+                    - **F1-Score:** Zrównoważenie między precyzją a czułością, szczególnie istotne w kontekście kosztów i skuteczności działań retencyjnych.
+
+                    Analiza tych metryk umożliwia firmom podejmowanie świadomych decyzji dotyczących strategii retencji, maksymalizując wartość klienta i minimalizując ryzyko rezygnacji.
+                    """)
 
             with col2:
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
@@ -102,7 +138,6 @@ if selected_option == "Strona główna":
                 """, unsafe_allow_html=False)
 
                 # Adding other related visualizations
-                st.image("wyniki_metryki.png", caption="Wyniki metryki")
                 st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
                 st.image("maciez_korelacji.png", caption="Macierz korelacji")
 
