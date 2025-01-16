@@ -12,7 +12,7 @@ if selected_option == "Informacje o Aplikacji":
     st.write("Witamy na naszej stronie!")
 
     # Zakładka z dodatkowymi opcjami
-    tab1, tab2, tab3= st.tabs(["Informacje na temat aplikacji", "Przykład Działania Aplikacji", "Oceń Aplikację"])
+    tab1, tab2, tab3= st.tabs(["Informacje na Temat Aplikacji", "Przykład Działania Aplikacji", "Oceń Aplikację"])
 
     with tab1:
         st.subheader("Opis Aplikacji")
