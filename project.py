@@ -112,7 +112,7 @@ if selected_option == "Strona główna":
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
                 # Inserting the confusion matrix image with caption
-                st.image("macierz_pomylek.png", caption="Macierz Pomyłek (Confusion Matrix)")
+                st.image("macierz_pomylek.png", caption="Macierz Pomyłek (Confusion Matrix) dla modelu uczenia maszynowego")
 
                 # Adding Markdown content for Confusion Matrix explanation
                 st.markdown("""
@@ -137,9 +137,75 @@ if selected_option == "Strona główna":
                 Dzięki tym informacjom można obliczyć różne miary skuteczności modelu, takie jak dokładność, precyzja, czułość czy miara F1.
                 """, unsafe_allow_html=False)
 
-                # Adding other related visualizations
-                st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
-                st.image("maciez_korelacji.png", caption="Macierz korelacji")
+                # Inserting the feature importance visualization image with caption
+                st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres Ważności Cech (Feature Importance) dla predukcji modelu uczenia maszynowego")
+
+                # Adding feature importance explanation
+                st.markdown("""
+                ## Ważność Cech w Modelu Uczenia Maszynowego
+
+                Wykres ważności cech (Feature Importance) przedstawia wpływ poszczególnych cech na decyzje podejmowane przez model uczenia maszynowego. Im wyższa wartość dla danej cechy, tym większy jej wpływ na wynik predykcji. Tego typu analiza pomaga w lepszym zrozumieniu działania modelu oraz w identyfikacji kluczowych czynników wpływających na rezygnację klientów.
+
+                ### Interpretacja Kluczowych Cech
+                1. **Subscription Length:**
+                   - Ta cecha ma największy wpływ na decyzje modelu. Długość subskrypcji może sugerować lojalność klienta - im dłużej klient korzysta z usługi, tym większe prawdopodobieństwo, że pozostanie.
+
+                2. **Age Group i Frequency of Use:**
+                   - Grupa wiekowa oraz częstotliwość korzystania z usługi są również istotnymi czynnikami. Mogą wskazywać na określone grupy demograficzne lub nawyki klientów bardziej podatne na rezygnację.
+
+                3. **Seconds of Use i Customer Value:**
+                   - Czas użytkowania oraz wartość klienta dostarczają istotnych informacji o zaangażowaniu klienta w korzystanie z usługi. Niski poziom tych cech może wskazywać na klientów zagrożonych rezygnacją.
+
+                4. **Complaints (Skargi):**
+                   - Liczba zgłoszonych skarg może być bezpośrednim wskaźnikiem niezadowolenia klientów, co istotnie wpływa na ich decyzję o rezygnacji.
+
+                ### Zastosowanie w Kontekście Biznesowym
+                - **Strategie Retencji:**
+                  Analiza ważności cech umożliwia firmie skupienie się na najistotniejszych aspektach, takich jak poprawa obsługi klienta (np. szybkie rozwiązywanie skarg) lub oferowanie promocji dla klientów w grupach wiekowych najbardziej podatnych na rezygnację.
+
+                - **Personalizacja Usług:**
+                  Zrozumienie, które cechy mają największe znaczenie, pozwala lepiej dopasować ofertę do potrzeb różnych segmentów klientów, zwiększając ich zadowolenie i zaangażowanie.
+
+                - **Optymalizacja Budżetu:**
+                  Dzięki identyfikacji kluczowych cech firma może efektywniej alokować zasoby, kierując kampanie retencyjne do najbardziej zagrożonych klientów.
+
+                Wnioski płynące z wykresu ważności cech mogą być kluczowe dla podejmowania działań zwiększających retencję i minimalizujących ryzyko rezygnacji klientów.
+                """)
+
+                # Inserting the feature correlation visualization image with caption
+                st.image("maciez_korelacji.png", caption="Macierz Korelacji Cech (Feature Correlation Matrix) modelu uczenia maszynowego")
+
+                # Adding correlation matrix explanation
+                st.markdown("""
+                ## Macierz Korelacji w Modelu Uczenia Maszynowego
+
+                Macierz korelacji przedstawia współzależności między różnymi cechami w danych wejściowych. Każda wartość w macierzy wskazuje siłę i kierunek związku między dwiema cechami. Analiza korelacji jest kluczowa w zrozumieniu danych i może wspierać proces optymalizacji modelu uczenia maszynowego.
+
+                ### Interpretacja Macierzy Korelacji
+                1. **Wartości Korelacji:**
+                   - Zakres wartości wynosi od -1 do 1:
+                     - **-1:** Silna, ujemna korelacja – gdy jedna cecha rośnie, druga maleje.
+                     - **0:** Brak korelacji – cechy są niezależne.
+                     - **1:** Silna, dodatnia korelacja – gdy jedna cecha rośnie, druga również rośnie.
+
+                2. **Korelacje Wysokie:**
+                   - Dodatnia korelacja (wartości bliskie 1) wskazuje na cechy, które zmieniają się w podobny sposób. Może to prowadzić do redundancji danych, co warto uwzględnić podczas trenowania modelu.
+
+                3. **Korelacje Niskie lub Negatywne:**
+                   - Ujemna korelacja (wartości bliskie -1) może wskazywać na cechy, które są silnie przeciwstawne. Tego typu informacje mogą być użyteczne do zrozumienia konfliktujących relacji w danych.
+
+                ### Zastosowanie w Kontekście Biznesowym
+                - **Redukcja Redundancji:**
+                  Jeśli dwie cechy są silnie skorelowane, jedna z nich może zostać usunięta podczas procesu inżynierii cech. To pozwala uprościć model i poprawić jego wydajność.
+
+                - **Zrozumienie Wpływu Cech:**
+                  Analiza korelacji pozwala firmom zidentyfikować cechy, które mają wspólny wpływ na decyzje klientów. Na przykład, częstotliwość korzystania z usługi i czas użytkowania mogą być silnie skorelowane, co wskazuje na ich podobny wkład w wynik predykcji.
+
+                - **Personalizacja Strategii:**
+                  Zrozumienie związków między cechami może wspierać bardziej spersonalizowane działania marketingowe. Na przykład, jeśli cechy dotyczące wieku klienta i wartości klienta są silnie skorelowane, strategia może uwzględniać specyficzne potrzeby demograficzne.
+
+                Macierz korelacji jest kluczowym narzędziem do eksploracji danych, umożliwiającym podejmowanie bardziej świadomych decyzji w procesie budowy i optymalizacji modeli predykcyjnych.
+                """)
 
         with tab5:
 
