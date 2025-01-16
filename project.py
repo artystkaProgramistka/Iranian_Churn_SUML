@@ -7,7 +7,7 @@ import os
 st.sidebar.title("Chcesz dowiedzieć się o aplikacji?\nA może uzyskać predykcję dla rezygnacji klientów z serwisu tlekomunikacyjnego?")
 selected_option = st.sidebar.radio("Wybierz Opcję", ["Informacje o Aplikacji", "Uzyskaj Predykcję"])
 
-if selected_option == "Informacje na temat aplikacji":
+if selected_option == "Informacje o Aplikacji":
     st.title("Predyktor odejść klientów z serwisów telekomunikacyjnych")
     st.write("Witamy na naszej stronie!")
 
