@@ -4,10 +4,10 @@ import joblib
 import os
 
 # Panel boczny do wyboru aplikacji
-st.sidebar.title("Chcesz dowiedzieć się o aplikacji, czy uzyskać predykcję dla rezygnacji klientów z serwisu tlekomunikacyjnego?")
+st.sidebar.title("Chcesz dowiedzieć się o aplikacji?\nA może uzyskać predykcję dla rezygnacji klientów z serwisu tlekomunikacyjnego?")
 selected_option = st.sidebar.radio("Wybierz Opcję", ["Informacje o Aplikacji", "Uzyskaj Predykcję"])
 
-if selected_option == "Strona główna":
+if selected_option == "Informacje na temat aplikacji":
     st.title("Predyktor odejść klientów z serwisów telekomunikacyjnych")
     st.write("Witamy na naszej stronie!")
 
