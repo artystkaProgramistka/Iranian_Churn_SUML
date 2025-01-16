@@ -76,7 +76,29 @@ if selected_option == "Strona główna":
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
                 # Wstawienie obrazów
-                st.image("macierz_pomylek.png", caption="**Macierz pomyłek**")
+                st.image("macierz_pomylek.png", caption="Macierz Pomyłek (Confusion Matrix)")
+                st.markdown(
+                    """## Macierz Pomyłek (Confusion Matrix)
+                    Macierz pomyłek to narzędzie używane w uczeniu maszynowym do oceny działania modelu klasyfikacyjnego. Prezentuje ona wyniki predykcji w formie tabeli, która porównuje przewidywane klasy z rzeczywistymi klasami. Dzięki macierzy pomyłek można zrozumieć, jak dobrze model radzi sobie z klasyfikowaniem danych i gdzie popełnia błędy.
+
+                    ### Jak czytać macierz pomyłek?
+
+                    Macierz pomyłek składa się z czterech podstawowych elementów:
+
+                    1. **True Positives (TP)** - Liczba przypadków, w których model poprawnie przewidział pozytywną klasę.
+                    2. **True Negatives (TN)** - Liczba przypadków, w których model poprawnie przewidział negatywną klasę.
+                    3. **False Positives (FP)** - Liczba przypadków, w których model błędnie przewidział pozytywną klasę (tzw. fałszywy alarm).
+                    4. **False Negatives (FN)** - Liczba przypadków, w których model błędnie przewidział negatywną klasę (tzw. przeoczenie).
+
+                    ### Interpretacja
+
+                    - **Oś pozioma (Przewidywana wartość)**: Przedstawia klasy przewidywane przez model.
+                    - **Oś pionowa (Rzeczywista wartość)**: Przedstawia faktyczne klasy w danych.
+                    - Pola na przecięciu obu osi wskazują liczbę przypadków dla danej kombinacji przewidywań i rzeczywistości.
+
+                    Dzięki tym informacjom można obliczyć różne miary skuteczności modelu, takie jak dokładność, precyzja, czułość czy miara F1.
+                    """
+                )
                 st.image("wyniki_metryki.png", caption="Wyniki metryki")
                 st.image("wykres_waznosci_cech_dla_wyniku.png", caption="Wykres ważności cech dla pomyłek")
                 st.image("maciez_korelacji.png", caption="Macierz korelacji")
@@ -94,7 +116,7 @@ if selected_option == "Strona główna":
             ### Podział Danych
             Dane zostały podzielone na zbiory:
             - **70%** do trenowania modelu,
-            - **30%** do doszkalania modelu.
+            - **30%** do testowania modelu.
 
             ---
 
@@ -114,7 +136,7 @@ if selected_option == "Strona główna":
             - **Customer Value** - Wartość dla Klienta *(Continuous)*
 
             #### Etykieta:
-            - **Churn** - Czy Zrezygnował z Subskrypcji *(Binary)*
+            - **Churn** - Czy Klient Zrezygnował z Subskrypcji *(Binary)*
             """)
     with tab2:
         uploaded_file = st.file_uploader("Wgraj plik .csv", type="csv")
