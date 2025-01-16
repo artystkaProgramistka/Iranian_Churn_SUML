@@ -108,6 +108,42 @@ if selected_option == "Strona główna":
                     Analiza tych metryk umożliwia firmom podejmowanie świadomych decyzji dotyczących strategii retencji, maksymalizując wartość klienta i minimalizując ryzyko rezygnacji.
                     """)
 
+                # Inserting the feature correlation visualization image with caption
+                st.image("maciez_korelacji.png",
+                         caption="Macierz Korelacji Cech (Feature Correlation Matrix) modelu uczenia maszynowego")
+
+                # Adding correlation matrix explanation
+                st.markdown("""
+                                ## Macierz Korelacji w Modelu Uczenia Maszynowego
+
+                                Macierz korelacji przedstawia współzależności między różnymi cechami w danych wejściowych. Każda wartość w macierzy wskazuje siłę i kierunek związku między dwiema cechami. Analiza korelacji jest kluczowa w zrozumieniu danych i może wspierać proces optymalizacji modelu uczenia maszynowego.
+
+                                ### Interpretacja Macierzy Korelacji
+                                1. **Wartości Korelacji:**
+                                   - Zakres wartości wynosi od -1 do 1:
+                                     - **-1:** Silna, ujemna korelacja – gdy jedna cecha rośnie, druga maleje.
+                                     - **0:** Brak korelacji – cechy są niezależne.
+                                     - **1:** Silna, dodatnia korelacja – gdy jedna cecha rośnie, druga również rośnie.
+
+                                2. **Korelacje Wysokie:**
+                                   - Dodatnia korelacja (wartości bliskie 1) wskazuje na cechy, które zmieniają się w podobny sposób. Może to prowadzić do redundancji danych, co warto uwzględnić podczas trenowania modelu.
+
+                                3. **Korelacje Niskie lub Negatywne:**
+                                   - Ujemna korelacja (wartości bliskie -1) może wskazywać na cechy, które są silnie przeciwstawne. Tego typu informacje mogą być użyteczne do zrozumienia konfliktujących relacji w danych.
+
+                                ### Zastosowanie w Kontekście Biznesowym
+                                - **Redukcja Redundancji:**
+                                  Jeśli dwie cechy są silnie skorelowane, jedna z nich może zostać usunięta podczas procesu inżynierii cech. To pozwala uprościć model i poprawić jego wydajność.
+
+                                - **Zrozumienie Wpływu Cech:**
+                                  Analiza korelacji pozwala firmom zidentyfikować cechy, które mają wspólny wpływ na decyzje klientów. Na przykład, częstotliwość korzystania z usługi i czas użytkowania mogą być silnie skorelowane, co wskazuje na ich podobny wkład w wynik predykcji.
+
+                                - **Personalizacja Strategii:**
+                                  Zrozumienie związków między cechami może wspierać bardziej spersonalizowane działania marketingowe. Na przykład, jeśli cechy dotyczące wieku klienta i wartości klienta są silnie skorelowane, strategia może uwzględniać specyficzne potrzeby demograficzne.
+
+                                Macierz korelacji jest kluczowym narzędziem do eksploracji danych, umożliwiającym podejmowanie bardziej świadomych decyzji w procesie budowy i optymalizacji modeli predykcyjnych.
+                                """)
+
             with col2:
                 st.write("**Wykresy do algorytmu uczenia maszynowego:**")
 
@@ -170,41 +206,6 @@ if selected_option == "Strona główna":
                   Dzięki identyfikacji kluczowych cech firma może efektywniej alokować zasoby, kierując kampanie retencyjne do najbardziej zagrożonych klientów.
 
                 Wnioski płynące z wykresu ważności cech mogą być kluczowe dla podejmowania działań zwiększających retencję i minimalizujących ryzyko rezygnacji klientów.
-                """)
-
-                # Inserting the feature correlation visualization image with caption
-                st.image("maciez_korelacji.png", caption="Macierz Korelacji Cech (Feature Correlation Matrix) modelu uczenia maszynowego")
-
-                # Adding correlation matrix explanation
-                st.markdown("""
-                ## Macierz Korelacji w Modelu Uczenia Maszynowego
-
-                Macierz korelacji przedstawia współzależności między różnymi cechami w danych wejściowych. Każda wartość w macierzy wskazuje siłę i kierunek związku między dwiema cechami. Analiza korelacji jest kluczowa w zrozumieniu danych i może wspierać proces optymalizacji modelu uczenia maszynowego.
-
-                ### Interpretacja Macierzy Korelacji
-                1. **Wartości Korelacji:**
-                   - Zakres wartości wynosi od -1 do 1:
-                     - **-1:** Silna, ujemna korelacja – gdy jedna cecha rośnie, druga maleje.
-                     - **0:** Brak korelacji – cechy są niezależne.
-                     - **1:** Silna, dodatnia korelacja – gdy jedna cecha rośnie, druga również rośnie.
-
-                2. **Korelacje Wysokie:**
-                   - Dodatnia korelacja (wartości bliskie 1) wskazuje na cechy, które zmieniają się w podobny sposób. Może to prowadzić do redundancji danych, co warto uwzględnić podczas trenowania modelu.
-
-                3. **Korelacje Niskie lub Negatywne:**
-                   - Ujemna korelacja (wartości bliskie -1) może wskazywać na cechy, które są silnie przeciwstawne. Tego typu informacje mogą być użyteczne do zrozumienia konfliktujących relacji w danych.
-
-                ### Zastosowanie w Kontekście Biznesowym
-                - **Redukcja Redundancji:**
-                  Jeśli dwie cechy są silnie skorelowane, jedna z nich może zostać usunięta podczas procesu inżynierii cech. To pozwala uprościć model i poprawić jego wydajność.
-
-                - **Zrozumienie Wpływu Cech:**
-                  Analiza korelacji pozwala firmom zidentyfikować cechy, które mają wspólny wpływ na decyzje klientów. Na przykład, częstotliwość korzystania z usługi i czas użytkowania mogą być silnie skorelowane, co wskazuje na ich podobny wkład w wynik predykcji.
-
-                - **Personalizacja Strategii:**
-                  Zrozumienie związków między cechami może wspierać bardziej spersonalizowane działania marketingowe. Na przykład, jeśli cechy dotyczące wieku klienta i wartości klienta są silnie skorelowane, strategia może uwzględniać specyficzne potrzeby demograficzne.
-
-                Macierz korelacji jest kluczowym narzędziem do eksploracji danych, umożliwiającym podejmowanie bardziej świadomych decyzji w procesie budowy i optymalizacji modeli predykcyjnych.
                 """)
 
         with tab5:
