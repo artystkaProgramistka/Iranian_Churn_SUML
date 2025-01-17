@@ -245,7 +245,7 @@ if selected_option == "Informacje o Aplikacji":
             """)
 
     with tab2:
-        df = pd.read_csv(customer_churn.csv)
+        df = pd.read_csv("customer_churn.csv")
 
         # Display a sample of the data
         st.write("Załadowane dane:")
