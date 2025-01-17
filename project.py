@@ -248,7 +248,7 @@ if selected_option == "Informacje o Aplikacji":
         df = pd.read_csv("customer_churn.csv")
 
         # Display a sample of the data
-        st.write("Załadowane dane:")
+        st.write("Przykładowe załadowane dane w formacie .csv:")
         st.table(df.head())
 
         try:
@@ -271,6 +271,7 @@ if selected_option == "Informacje o Aplikacji":
             # Add predictions to the DataFrame
             df['Prediction'] = predictions
 
+            st.write("Predykcja dla przykładowych danych- dodana w ostatniej kolumnie 'Prediction'")
             # Display rows incrementally with session state tracking
             if "rows_shown" not in st.session_state:
                 st.session_state.rows_shown = 50
