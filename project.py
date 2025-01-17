@@ -243,7 +243,141 @@ if selected_option == "Informacje o Aplikacji":
             #### Etykieta:
             - **Churn** - Czy Klient Zrezygnował z Subskrypcji *(Binary)*
             """)
+
     with tab2:
+        df = pd.read_csv(customer_churn.csv)
+
+        # Display a sample of the data
+        st.write("Załadowane dane:")
+        st.table(df.head())
+
+        try:
+            # Load the trained model
+            model = joblib.load("best_rf_model.pkl")  # Ensure model file is in the same directory
+
+            # Preprocessing the uploaded data (adjust based on `train_save_model.py`)
+            df.drop(['Age'], axis=1, inplace=True, errors='ignore')  # Drop 'Age' column if it exists
+            integer_columns = [col for col in df.columns if col not in ['Status', 'Complains', 'Churn']]
+            df[integer_columns] = df[integer_columns].astype('int')
+            df['Status'] = df['Status'].map({1: True, 2: False}).astype('bool')
+            df['Complains'] = df['Complains'].map({1: True, 0: False}).astype('bool')
+
+            # Drop the target column if it exists
+            X_infer = df.drop(['Churn'], axis=1, errors='ignore')
+
+            # Make predictions
+            predictions = model.predict(X_infer)
+
+            # Add predictions to the DataFrame
+            df['Prediction'] = predictions
+
+            # Display rows incrementally with session state tracking
+            if "rows_shown" not in st.session_state:
+                st.session_state.rows_shown = 50
+
+            rows_shown = st.session_state.rows_shown
+            st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
+            st.table(df.iloc[:rows_shown])
+
+            if rows_shown < len(df):
+                if st.button(f"Pokaż kolejne {min(100, len(df) - rows_shown)} wierszy",
+                             key=f"button_{rows_shown}"):
+                    st.session_state.rows_shown += 100
+
+            # Add a download button for the predictions CSV
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="Pobierz dane z predykcjami jako CSV",
+                data=csv,
+                file_name="predykcje.csv",
+                mime="text/csv",
+            )
+
+        except FileNotFoundError:
+            st.error(
+                "Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
+        except Exception as e:
+            st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
+
+    with tab3:
+        st.subheader("Oceń Aplikacje")
+        st.write("Twoja opinia jest dla nas ważna! Oceń aplikację i podziel się swoimi uwagami.")
+        st.write("Oceń zadowolenie aplikacji")
+        rating=st.slider("Zadowolenie 0-10",0,10,5)
+        feedback = st.text_area("Podziel się swoją opinią (opcjonalne):")
+        if st.button("Prześlij opinię"):
+            st.success("Dziękujemy za Twoją opinię!")
+
+elif selected_option == "Uzyskaj Predykcję":
+    tab6, tab7 = st.tabs(["Pojedyncza Predykcja", "Przedykcja Zbiorcza (na podstawie csv)"])
+
+    with tab6:
+        st.title("Wypełnij ręcznie pola i uzyskaj predykcję")
+
+        try:
+            # Load the trained model
+            model = joblib.load("best_rf_model.pkl")
+
+            # Input fields for user data
+            st.write("Wprowadź dane klienta:")
+            subscription_length = st.number_input("Długość subskrypcji (miesiące)", min_value=0, max_value=120, step=1, value=12)
+            call_failures = st.number_input("Nieudane połączenia", min_value=0, max_value=100, step=1, value=5)
+            complaints = st.selectbox("Czy były zgłaszane skargi?", options=["Tak", "Nie"])
+            frequency_of_sms = st.number_input("Częstotliwość SMS-ów", min_value=0, max_value=500, step=1, value=50)
+            customer_value = st.number_input("Wartość klienta", min_value=0.0, step=0.1, value=100.0)
+            charge_amount = st.number_input("Kwota opłaty", min_value=0.0, step=0.1, value=50.0)
+            tariff_plan = st.number_input("Plan taryfowy (numer)", min_value=1, max_value=10, step=1, value=1)
+            distinct_called_numbers = st.number_input("Liczba odrębnych połączeń", min_value=0, max_value=100, step=1, value=10)
+            frequency_of_use = st.number_input("Częstotliwość użytkowania", min_value=0, max_value=500, step=1, value=30)
+            seconds_of_use = st.number_input("Czas użytkowania (sekundy)", min_value=0, max_value=100000, step=100, value=1000)
+            age_group = st.number_input("Grupa wiekowa", min_value=1, max_value=5, step=1, value=2)
+            status = st.selectbox("Status", options=["Aktywny", "Nieaktywny"])
+
+            # Map input to feature names used in training
+            user_data = {
+                "Call  Failure": call_failures,
+                "Complains": 1 if complaints == "Tak" else 0,
+                "Subscription  Length": subscription_length,
+                "Charge  Amount": charge_amount,
+                "Seconds of Use": seconds_of_use,
+                "Frequency of use": frequency_of_use,
+                "Frequency of SMS": frequency_of_sms,
+                "Distinct Called Numbers": distinct_called_numbers,
+                "Age Group": age_group,
+                "Tariff Plan": tariff_plan,
+                "Status": 1 if status == "Aktywny" else 0,
+                "Customer Value": customer_value,
+            }
+
+            # Convert to DataFrame for prediction
+            user_df = pd.DataFrame([user_data])
+
+            # Ensure column names match exactly with the training data
+            expected_features = [
+                "Call  Failure", "Complains", "Subscription  Length", "Charge  Amount",
+                "Seconds of Use", "Frequency of use", "Frequency of SMS",
+                "Distinct Called Numbers", "Age Group", "Tariff Plan",
+                "Status", "Customer Value"
+            ]
+            user_df = user_df[expected_features]  # Align the columns
+
+            # Make prediction
+            prediction = model.predict(user_df)
+            prediction_probability = model.predict_proba(user_df)[:, 1][0]
+
+            # Display results
+            st.subheader("Wynik Predykcji:")
+            if prediction[0] == 1:
+                st.warning(f"Klient z dużym prawdopodobieństwem zrezygnuje. ({prediction_probability:.2%})")
+            else:
+                st.success(f"Klient prawdopodobnie nie zrezygnuje. ({prediction_probability:.2%})")
+
+        except FileNotFoundError:
+            st.error("Plik modelu `best_rf_model.pkl` nie został znaleziony.")
+        except Exception as e:
+            st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
+
+    with tab7:
         uploaded_file = st.file_uploader("Wgraj plik .csv", type="csv")
 
         # Check if a file has been uploaded
@@ -302,81 +436,6 @@ if selected_option == "Informacje o Aplikacji":
                     "Plik modelu `best_rf_model.pkl` nie został znaleziony. Upewnij się, że znajduje się w tym samym folderze co ten skrypt.")
             except Exception as e:
                 st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
-
-    with tab3:
-        st.subheader("Oceń Aplikacje")
-        st.write("Twoja opinia jest dla nas ważna! Oceń aplikację i podziel się swoimi uwagami.")
-        st.write("Oceń zadowolenie aplikacji")
-        rating=st.slider("Zadowolenie 0-10",0,10,5)
-        feedback = st.text_area("Podziel się swoją opinią (opcjonalne):")
-        if st.button("Prześlij opinię"):
-            st.success("Dziękujemy za Twoją opinię!")
-
-elif selected_option == "Uzyskaj Predykcję":
-    st.title("Uzyskaj Predykcję")
-
-    try:
-        # Load the trained model
-        model = joblib.load("best_rf_model.pkl")
-
-        # Input fields for user data
-        st.write("Wprowadź dane klienta:")
-        subscription_length = st.number_input("Długość subskrypcji (miesiące)", min_value=0, max_value=120, step=1, value=12)
-        call_failures = st.number_input("Nieudane połączenia", min_value=0, max_value=100, step=1, value=5)
-        complaints = st.selectbox("Czy były zgłaszane skargi?", options=["Tak", "Nie"])
-        frequency_of_sms = st.number_input("Częstotliwość SMS-ów", min_value=0, max_value=500, step=1, value=50)
-        customer_value = st.number_input("Wartość klienta", min_value=0.0, step=0.1, value=100.0)
-        charge_amount = st.number_input("Kwota opłaty", min_value=0.0, step=0.1, value=50.0)
-        tariff_plan = st.number_input("Plan taryfowy (numer)", min_value=1, max_value=10, step=1, value=1)
-        distinct_called_numbers = st.number_input("Liczba odrębnych połączeń", min_value=0, max_value=100, step=1, value=10)
-        frequency_of_use = st.number_input("Częstotliwość użytkowania", min_value=0, max_value=500, step=1, value=30)
-        seconds_of_use = st.number_input("Czas użytkowania (sekundy)", min_value=0, max_value=100000, step=100, value=1000)
-        age_group = st.number_input("Grupa wiekowa", min_value=1, max_value=5, step=1, value=2)
-        status = st.selectbox("Status", options=["Aktywny", "Nieaktywny"])
-
-        # Map input to feature names used in training
-        user_data = {
-            "Call  Failure": call_failures,
-            "Complains": 1 if complaints == "Tak" else 0,
-            "Subscription  Length": subscription_length,
-            "Charge  Amount": charge_amount,
-            "Seconds of Use": seconds_of_use,
-            "Frequency of use": frequency_of_use,
-            "Frequency of SMS": frequency_of_sms,
-            "Distinct Called Numbers": distinct_called_numbers,
-            "Age Group": age_group,
-            "Tariff Plan": tariff_plan,
-            "Status": 1 if status == "Aktywny" else 0,
-            "Customer Value": customer_value,
-        }
-
-        # Convert to DataFrame for prediction
-        user_df = pd.DataFrame([user_data])
-
-        # Ensure column names match exactly with the training data
-        expected_features = [
-            "Call  Failure", "Complains", "Subscription  Length", "Charge  Amount",
-            "Seconds of Use", "Frequency of use", "Frequency of SMS",
-            "Distinct Called Numbers", "Age Group", "Tariff Plan",
-            "Status", "Customer Value"
-        ]
-        user_df = user_df[expected_features]  # Align the columns
-
-        # Make prediction
-        prediction = model.predict(user_df)
-        prediction_probability = model.predict_proba(user_df)[:, 1][0]
-
-        # Display results
-        st.subheader("Wynik Predykcji:")
-        if prediction[0] == 1:
-            st.warning(f"Klient z dużym prawdopodobieństwem zrezygnuje. ({prediction_probability:.2%})")
-        else:
-            st.success(f"Klient prawdopodobnie nie zrezygnuje. ({prediction_probability:.2%})")
-
-    except FileNotFoundError:
-        st.error("Plik modelu `best_rf_model.pkl` nie został znaleziony.")
-    except Exception as e:
-        st.error(f"Wystąpił błąd podczas przetwarzania: {e}")
 
 
 
