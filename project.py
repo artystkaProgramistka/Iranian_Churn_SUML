@@ -249,7 +249,7 @@ if selected_option == "Informacje o Aplikacji":
 
         # Display a sample of the data
         st.write("Przykładowe załadowane dane w formacie .csv:")
-        st.table(df.head())
+        st.table(df)
 
         try:
             # Load the trained model
@@ -419,7 +419,7 @@ elif selected_option == "Uzyskaj Predykcję":
                     st.session_state.rows_shown = 50
 
                 rows_shown = st.session_state.rows_shown
-                st.write(f"Wyświetlono {rows_shown} wierszy z danymi i predykcjami:")
+                st.write(f"Wynik z dodaną w ostatniej kolumnie predykcją:")
                 st.table(df.iloc[:rows_shown])
 
                 if rows_shown < len(df):
